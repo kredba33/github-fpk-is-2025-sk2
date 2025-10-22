@@ -1,0 +1,16 @@
+# Ignore build artifacts
+bin/
+obj/
+**/bin/
+**/obj/
+
+# User/editor files
+.vscode/
+.DS_Store
+
+# Rider/JetBrains
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
