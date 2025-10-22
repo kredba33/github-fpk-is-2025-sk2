@@ -13,7 +13,7 @@ class Program
             Console.WriteLine("************ Součet a součin cifer *********");
             Console.WriteLine("********************************************");
             Console.WriteLine("************* Filip Patrik Kredba **********");
-            Console.WriteLine("************** 16.10.2025 ******************");
+            Console.WriteLine("************** 22.10.2025 ******************");
             Console.WriteLine("********************************************");
             Console.WriteLine();
 
