@@ -1,68 +1,58 @@
 using System;
 
-string again = "a";
-while (again == "a")
+class Program
 {
-    Console.Clear();
-    Console.WriteLine("********************************************");
-    Console.WriteLine("************ Součet číslic - varianta B ******");
-    Console.WriteLine("********************************************");
-    Console.WriteLine("************* Jan Ulrich *******************");
-    Console.WriteLine("************** 16.10.2025 *******************");
-    Console.WriteLine("********************************************");
-    Console.WriteLine();
-
-    // Načteme číslo jako text, abychom podpořili velmi velká čísla
-    Console.Write("Zadejte číslo (může obsahovat znaménko + nebo -): ");
-    string? input = Console.ReadLine();
-    while (string.IsNullOrWhiteSpace(input))
+    static void Main()
     {
-        Console.Write("Nezadali jste číslo. Zadejte ho znovu: ");
-        input = Console.ReadLine();
-    }
+        string again = "a";
 
-    // Odebereme bílé znaky
-    input = input!.Trim();
-
-    // Pokud má vstup znaménko na začátku, odstraníme ho
-    if (input.StartsWith("+") || input.StartsWith("-"))
-    {
-        input = input.Substring(1);
-    }
-
-    long sum = 0;
-    bool anyDigit = false;
-    foreach (char c in input)
-    {
-        if (char.IsDigit(c))
+        while (again == "a")
         {
-            anyDigit = true;
-            sum += c - '0';
-        }
-        else
-        {
-            // pokud narazíme na nepovolený znak, upozorníme a požádáme o nové zadání
-            Console.WriteLine("Vstup obsahuje nepovolené znaky ('{0}'). Prosím zadejte pouze číslo.", c);
-            sum = 0;
-            anyDigit = false;
-            break;
-        }
-    }
+            Console.Clear();
+            Console.WriteLine("********************************************");
+            Console.WriteLine("************ Součet a součin cifer *********");
+            Console.WriteLine("********************************************");
+            Console.WriteLine("************* Filip Patrik Kredba **********");
+            Console.WriteLine("************** 16.10.2025 ******************");
+            Console.WriteLine("********************************************");
+            Console.WriteLine();
 
-    if (!anyDigit)
-    {
-        Console.WriteLine("Vstup neobsahuje žádnou číslici. Zkusme to znovu.");
-    }
-    else
-    {
-        Console.WriteLine();
-        Console.WriteLine("================================");
-        Console.WriteLine("Zadali jste: {0}", input);
-        Console.WriteLine("Součet číslic: {0}", sum);
-        Console.WriteLine("================================");
-    }
+            Console.Write("Zadejte celé číslo: ");
+            int number;
+            while (!int.TryParse(Console.ReadLine(), out number))
+            {
+                Console.Write("Nezadali jste celé číslo. Zadejte ho znovu: ");
+            }
 
-    Console.WriteLine();
-    Console.WriteLine("Pro opakování stiskněte 'a', pro ukončení jinou klávesu");
-    again = Console.ReadLine() ?? "";
+            // Převod čísla na kladné a na text
+            string text = Math.Abs(number).ToString();
+
+            int soucet = 0;
+            int soucin = 1;
+
+            // Pokud je číslo 0, nastavíme součin i součet na 0
+            if (text == "0")
+            {
+                soucet = 0;
+                soucin = 0;
+            }
+            else
+            {
+                foreach (char znak in text)
+                {
+                    int cifra = znak - '0'; // převod znaku číslice na int
+                    soucet += cifra;
+                    soucin *= cifra;
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine($"Součet cifer čísla {number} je {soucet}");
+            Console.WriteLine($"Součin cifer čísla {number} je {soucin}");
+            Console.WriteLine();
+
+            Console.Write("Pro opakování stiskněte a: ");
+            again = Console.ReadLine();
+        }
+    }
 }
