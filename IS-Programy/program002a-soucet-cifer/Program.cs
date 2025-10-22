@@ -40,7 +40,7 @@ class Program
             {
                 foreach (char znak in text)
                 {
-                    int cifra = znak - '0'; // převod znaku číslice na int
+                    int cifra = znak - '0'; 
                     soucet += cifra;
                     soucin *= cifra;
                 }
