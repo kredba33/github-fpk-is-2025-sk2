@@ -17,23 +17,38 @@ class Program
             Console.WriteLine("********************************************");
             Console.WriteLine();
 
-            // --- Vstup ---
-            Console.Write("Zadejte velikost prvního obrazce (L-tvar): ");
-            int n1 = ReadSize(3);
-            Console.Write("Zadejte velikost druhého obrazce (diagonála): ");
-            int n2 = ReadSize(3);
-            Console.Write("Zadejte velikost třetího obrazce (kruh): ");
-            int n3 = ReadSize(5);
+            Console.Write("Jaký obrazec chceš vykreslit (A - šachovnice, B - kosočtverec (obrys), C - písmeno N): ");
+            char volba = Char.ToUpper(Console.ReadKey().KeyChar);
+            Console.WriteLine();
 
-            // --- Výstup ---
-            Console.WriteLine("\nvykreslen první obrazec");
-            DrawLShape(n1);
+            Console.Write("Zadej velikost (celé číslo >= 2): ");
+            if (!int.TryParse(Console.ReadLine(), out int n) || n < 2)
+            {
+                Console.WriteLine("Neplatná velikost. Zadej celé číslo >= 2.");
+            }
+            else
+            {
+                Console.WriteLine();
 
-            Console.WriteLine("\nvykreslen druhý obrazec");
-            DrawDiagonal(n2);
-
-            Console.WriteLine("\nvykreslen třetí obrazec");
-            DrawCircle(n3);
+                switch (volba)
+                {
+                    case 'A':
+                        Console.WriteLine("vykreslen první obrazec - šachovnice");
+                        VykresliSachovnici(n);
+                        break;
+                    case 'B':
+                        Console.WriteLine("vykreslen druhý obrazec - kosočtverec (obrys)");
+                        VykresliKosoctverecObrys(n);
+                        break;
+                    case 'C':
+                        Console.WriteLine("vykreslen třetí obrazec - písmeno N");
+                        VykresliPismenoN(n);
+                        break;
+                    default:
+                        Console.WriteLine("Neplatná volba. Zvol A, B nebo C.");
+                        break;
+                }
+            }
 
             Console.WriteLine();
             Console.WriteLine("Pro opakování programu stiskněte klávesu a");
@@ -41,46 +56,50 @@ class Program
         }
     }
 
-    static int ReadSize(int min)
+    // A: šachovnice hvězdiček (střídání)
+    static void VykresliSachovnici(int n)
     {
-        int val;
-        while (!int.TryParse(Console.ReadLine(), out val) || val < min)
-            Console.Write($"Neplatné číslo. Zadejte celé číslo >= {min}: ");
-        return val;
-    }
-
-    static void DrawLShape(int n)
-    {
-        for (int r = 0; r < n; r++)
+        for (int i = 0; i < n; i++)
         {
-            for (int c = 0; c < n; c++)
-                Console.Write((r == n - 1 || c == 0) ? "* " : "  ");
-            Console.WriteLine();
-        }
-    }
-
-    static void DrawDiagonal(int n)
-    {
-        for (int r = 0; r < n; r++)
-        {
-            for (int c = 0; c < n; c++)
-                Console.Write((r == c) ? "* " : "  ");
-            Console.WriteLine();
-        }
-    }
-
-    static void DrawCircle(int n)
-    {
-        double radius = (n - 1) / 2.0;
-        double center = radius;
-        double tolerance = 0.6;
-
-        for (int y = 0; y < n; y++)
-        {
-            for (int x = 0; x < n; x++)
+            for (int j = 0; j < n; j++)
             {
-                double dist = Math.Sqrt(Math.Pow(x - center, 2) + Math.Pow(y - center, 2));
-                Console.Write(Math.Abs(dist - radius) <= tolerance ? "* " : "  ");
+                if ((i + j) % 2 == 0)
+                    Console.Write("*");
+                else
+                    Console.Write(" ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    // B: kosočtverec - pouze obrys
+    static void VykresliKosoctverecObrys(int n)
+    {
+        int mid = n / 2;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (Math.Abs(i - mid) + Math.Abs(j - mid) == mid)
+                    Console.Write("*");
+                else
+                    Console.Write(" ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    // C: písmeno N
+    static void VykresliPismenoN(int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (j == 0 || j == n - 1 || j == i)
+                    Console.Write("*");
+                else
+                    Console.Write(" ");
             }
             Console.WriteLine();
         }
